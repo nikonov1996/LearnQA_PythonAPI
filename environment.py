@@ -1,12 +1,12 @@
 import os
 
 class Environment:
-    DEV = "dev"
+    DEV = 'dev'
     PROD = 'prod'
 
     URLS = {
         DEV: "https://playground.learnqa.ru/api_dev",
-        PROD:"https://playground.learnqa.ru/api"
+        PROD: "https://playground.learnqa.ru/api"
     }
 
     def __init__(self):
