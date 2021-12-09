@@ -28,7 +28,7 @@ passwords = [
     '123qwe']
 url = "https://playground.learnqa.ru/api/"
 correct_login = "super_admin"
-correct_password = ''
+correct_password = 'not know'
 for password in passwords:
 
     response = requests.post(
@@ -40,8 +40,7 @@ for password in passwords:
     )
 
     if response.status_code == 200:
-        #auth_cookie = response.json()['auth_cookie']
-        auth_cookie = "mock_cookie"
+        auth_cookie = response.cookies['auth_cookie']
     else:
         auth_cookie = "mock_cookie"
 
@@ -61,3 +60,5 @@ for password in passwords:
         print(f"Login: {correct_login}. Password: {password} is NOT correct!")
 
     print("--------------")
+
+print(f"Correct password: {correct_password}")
