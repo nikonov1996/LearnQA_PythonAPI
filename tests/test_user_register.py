@@ -52,3 +52,24 @@ class TestUserRegister(BaseCase):
         Assertions.assert_code_status(response, 400)
         assert response.content.decode("utf-8") == f"The following required params are missed: {missing_param}", \
             f"Unexpected response content: {response.content}"
+
+    names = {
+        # username with one symbol:
+        "1",
+        # username with 250 symbols:
+        "teststringfornameteststringfornameteststringfornameteststringfornameteststringfornameteststringf"
+        "ornameteststringfornameteststringfornameteststringfornameteststringfornameteststringfornameteststr"
+        "ingfornameteststringfornameteststringfornameteststringfornametest"
+    }
+    @pytest.mark.parametrize("name", names )
+    def test_create_user_with_different_username_str_length(self, name):
+        data = self.prepare_registration_data(username=name)
+
+        response = MyRequests.post("/user", data=data)
+
+        Assertions.assert_code_status(response, 400)
+
+        assert_text = "long" if len(name) > 250 else "short"
+
+        assert response.content.decode("utf-8") == f"The value of 'username' field is too {assert_text}", \
+                f"Unexpected response content: {response.content}"
